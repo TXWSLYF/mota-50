@@ -1,10 +1,14 @@
 import { Application } from "pixi.js";
 
-const app = new Application({ width: 352, height: 352 });
+export const GRID_WIDTH = 32;
+export const GRID_COUNT = 11;
+
+const app = new Application({
+  width: GRID_WIDTH * GRID_COUNT,
+  height: GRID_WIDTH * GRID_COUNT,
+});
 document.body.appendChild(app.view);
 
-app.view.style.width = "422px";
-app.view.style.height = "422px";
 app.view.style.borderWidth = "3px";
 app.view.style.borderColor = "white";
 app.view.style.borderStyle = "solid";

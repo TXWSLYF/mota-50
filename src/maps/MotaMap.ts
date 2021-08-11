@@ -1,8 +1,5 @@
 import { Container, Sprite } from "pixi.js";
-import app from "../application";
-import Wall from "../buildings/Wall";
-import YellowDoor from "../buildings/YellowDoor";
-import MapItem from "../MapItem";
+import app, { GRID_COUNT, GRID_WIDTH } from "../application";
 import { RESOURCES } from "../resources";
 
 export default class MotaMap {
@@ -27,13 +24,11 @@ export default class MotaMap {
 
   drawGrids() {
     const gridTexture = app.loader.resources[RESOURCES["grid"]].texture;
-    const widthCount = app.view.width / gridTexture.width;
-    const heightCount = app.view.height / gridTexture.height;
 
-    for (let i = 0; i < widthCount; i++) {
-      for (let j = 0; j < heightCount; j++) {
+    for (let i = 0; i < GRID_COUNT; i++) {
+      for (let j = 0; j < GRID_COUNT; j++) {
         const grid = new Sprite(gridTexture);
-        grid.position.set(i * gridTexture.width, j * gridTexture.height);
+        grid.position.set(i * GRID_WIDTH, j * GRID_WIDTH);
 
         this.container.addChild(grid);
       }
@@ -44,15 +39,8 @@ export default class MotaMap {
     this.map.forEach((arr, i) => {
       arr.forEach((mapItem, j) => {
         if (mapItem) {
-          if (mapItem === Wall) {
-            const wall = new Wall(j * 32, i * 32);
-            this.container.addChild(wall.sprite);
-          }
-
-          if (mapItem === YellowDoor) {
-            const yellowDoor = new YellowDoor(j * 32, i * 32);
-            this.container.addChild(yellowDoor.sprite);
-          }
+          const wall = new mapItem(j * GRID_WIDTH, i * GRID_WIDTH);
+          this.container.addChild(wall.sprite);
         }
       });
     });

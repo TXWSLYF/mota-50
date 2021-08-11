@@ -1,4 +1,4 @@
-import { Rectangle, Sprite } from "pixi.js";
+import { Sprite } from "pixi.js";
 import app from "./application";
 
 export default class MapItem {
