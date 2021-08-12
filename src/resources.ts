@@ -32,6 +32,9 @@ export const RESOURCES = {
   yellowkey: "images/items/yellowkey.png",
   bluekey: "images/items/bluekey.png",
   redkey: "images/items/redkey.png",
+
+  // other
+  player: "images/player.png",
 };
 
 // 加载图片

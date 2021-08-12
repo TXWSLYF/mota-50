@@ -1,18 +1,29 @@
 import { Container, Sprite } from "pixi.js";
 import app, { GRID_COUNT, GRID_WIDTH } from "../application";
+import Knight from "../Knight";
 import { RESOURCES } from "../resources";
 
 export default class MotaMap {
   // 层数
   level: number;
+  map: any[][];
+  knightPosition: { x: number; y: number };
 
   container: Container;
+  knight: Knight;
 
-  map: any[][];
-
-  constructor({ level, map }: { level: number; map: any[][] }) {
+  constructor({
+    level,
+    map,
+    knightPosition,
+  }: {
+    level: number;
+    map: any[][];
+    knightPosition: { x: number; y: number };
+  }) {
     this.level = level;
     this.map = map;
+    this.knightPosition = knightPosition;
     this.container = new Container();
     app.stage.addChild(this.container);
   }
@@ -20,6 +31,7 @@ export default class MotaMap {
   load() {
     this.drawGrids();
     this.drawMap();
+    this.drawKnight();
   }
 
   drawGrids() {
@@ -44,5 +56,14 @@ export default class MotaMap {
         }
       });
     });
+  }
+
+  drawKnight() {
+    const { x, y } = this.knightPosition;
+    const knight = new Knight();
+    this.knight = knight;
+    knight.sprite.position.set(x * GRID_WIDTH, y * GRID_WIDTH);
+
+    this.container.addChild(knight.sprite);
   }
 }

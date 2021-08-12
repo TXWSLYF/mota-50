@@ -75,4 +75,8 @@ export const MAP1 = {
       ShiLaiMuGreen,
     ],
   ],
+  knightPosition: {
+    x: 5,
+    y: 10,
+  },
 };
