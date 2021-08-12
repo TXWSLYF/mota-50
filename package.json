@@ -18,7 +18,6 @@
     "start": "webpack server --port 8080"
   },
   "dependencies": {
-    "hotkeys-js": "^3.8.7",
     "pixi.js": "^6.1.1"
   }
 }
