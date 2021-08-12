@@ -1,16 +1,18 @@
-import { AnimatedSprite, Rectangle } from "pixi.js";
-import app from "./application";
+import { AnimatedSprite, Rectangle, Texture } from "pixi.js";
+import app, { GRID_WIDTH } from "./application";
 import Monster from "./monsters/Monster";
 import { RESOURCES } from "./resources";
 import hotkeys from "hotkeys-js";
 
 export default class Knight {
   sprite: AnimatedSprite;
-  spriteWalk: AnimatedSprite;
   name: string;
   hp: number;
   attack: number;
   defense: number;
+
+  textures: Texture[][] = [[], [], [], []];
+  keys = ["s", "a", "d", "w"];
 
   vx = 0;
   vy = 0;
@@ -24,11 +26,23 @@ export default class Knight {
     this.defense = 10;
 
     const texture = app.loader.resources[RESOURCES["player"]].texture;
-    const texture1 = texture.clone();
-    texture1.frame = new Rectangle(0, 0, 32, 32);
-    const spriteWalk = new AnimatedSprite([texture1]);
-    this.spriteWalk = spriteWalk;
-    this.sprite = spriteWalk;
+
+    for (let i = 0; i < 4; i++) {
+      for (let j = 0; j < 4; j++) {
+        const clonedTexture = texture.clone();
+        clonedTexture.frame = new Rectangle(
+          j * GRID_WIDTH,
+          i * GRID_WIDTH,
+          GRID_WIDTH,
+          GRID_WIDTH
+        );
+
+        this.textures[i][j] = clonedTexture;
+      }
+    }
+
+    this.sprite = new AnimatedSprite(this.textures[1]);
+    this.sprite.animationSpeed = 0.1;
 
     app.ticker.add(() => {
       this.sprite.x += this.vx;
